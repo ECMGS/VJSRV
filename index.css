@@ -1,0 +1,71 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	 background-image: linear-gradient(to right bottom, #53e557, #45dd62, #38d46c, #2fcb73, #2ac279);
+}
+
+footer {
+	position: absolute;
+	bottom: 2rem;
+	right: 2rem;
+	font-family: 'Roboto', sans-serif;
+	color: #2d8534;
+}
+
+footer a {
+	color: #2d8534;
+	transition: 750ms color;
+}
+
+footer a:hover {
+	color: #1c5938;	
+}
+
+.hidden {
+	display: none !important;
+}
+
+#welcome-screen {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#welcome-screen div h1 {
+	color: #f0fff0;
+	font-size: 3.5rem;	
+	font-style: italic;
+	font-family: 'Fredoka One', cursive;
+}
+
+#welcome-screen div h2 {
+	color: #54ad47;
+	font-size: 1.5rem;
+	font-family: 'Roboto', sans-serif;
+}
+
+#welcome-screen div button{
+	display: block;
+	margin: auto;
+	margin-top: 10vh;
+	border: 0.25rem #2d8534 solid;
+	border-radius: 2.5rem;
+	height: 5rem;
+	padding: 1rem;
+	font-size: 2rem;
+	font-family: 'Fredoka One', cursive; 
+	background: #c7edca;
+	color: #2d8534;
+	cursor: pointer;
+	transition: 750ms color, 750ms background;
+}
+
+#meme-button:hover {
+	color: #c7edca;
+	background: #2d8534;
+}
