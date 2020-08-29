@@ -107,7 +107,7 @@ const onPlayerStateChange = (evt) => {
  * 	put on private.
  */
 const onPlayerError = (evt) => {
-	console.log(`The video ${evt.target.getVideoUrl()} can't be loaded\nMaybe it has been deleted by the creator`);
+	if (evt !== undefined) console.log(`The video ${evt.target.getVideoUrl()} can't be loaded\nMaybe it has been deleted by the creator`);
 	removePlaverDiv();
 	playVideo();
 }
