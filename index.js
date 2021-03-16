@@ -1,48 +1,92 @@
 // Var containing the url of the vines that the user has already watched
 let viewedVines = [];
 
-/*
- *
- * BUTTON HANDLERS
- *
+/**
+ * 	BUTTON HANDLERS
+ */
+
+/**
+ * 	Handler of the main meme button
+ */
+const playMemeClick = () => {
+	hideMainScreen();
+	playVideo(true);
+}
+
+/**
+ * Handler of the play another meme button	
+ */
+const playAnotherMemeClick = () => {
+	hidePlayAnotherVideoPromptScreen();
+	playVideo(true);
+}
+
+/**
+ * 	Handler of the replay meme button
+ */
+const replayMemeClick = () => {
+	hidePlayAnotherVideoPromptScreen();
+	playVideo(false);
+}
+
+/**
+ * 	DOM handlers
  */
 
 
 /**
- * 	Shows the player when the meme-button has been hit
+ * 	Shows the player
  */
-const mButtonClick = () => {
+const showPlayerScreen = () => {
+	const player = document.getElementById("player");
+	player.classList.remove("hidden");
+};
+
+/**
+ * 	Hides the player screen
+ */
+const hidePlayerScreen = () => {
+	const player = document.getElementById("player");
+	player.outerHTML = "<div id=\"player\"></div>";
+}
+
+/**
+ * 	Hides main screen
+ */
+const hideMainScreen = () => {
 	const wScreen = document.getElementById("welcome-container");
-	const player = document.getElementById("player");
-
 	wScreen.classList.add("hidden");
-	player.classList.remove("hidden");
-
-	playVideo();
 }
 
 /**
- * Play another video handler
+ * 	Hides the playAnotherVideoPrompt
  */
-const paVclick = () => {
+const hidePlayAnotherVideoPromptScreen = () => {
 	const pAVPrompt = document.getElementById("paVideoPromp");
-	const player = document.getElementById("player");
-
-
 	pAVPrompt.classList.add("hidden");
-	player.classList.remove("hidden");
-
-	playVideo();
 }
 
-/*
- *
- * 	VIDEO HANDLERS
- *
+/**
+ * 	Shows the playAnotherVideoPrompt
+ */
+const showPlayAnotherVideoPromtScreen = () => {
+	const pAVPrompt = document.getElementById("paVideoPromp");
+	pAVPrompt.classList.remove("hidden");
+
+	// Sets the value for the text of the videos watched
+	const watchedVideosElement = document.getElementById("watchedVideos");
+	const totalVideosElement = document.getElementById("totalVideos");
+
+	watchedVideosElement.innerText = viewedVines.length;
+	totalVideosElement.innerText = videos.items.length;
+}
+
+/**
+ * 	video logic
  */
 
 /**
- * 	Chooses a random video from the file
+ * 	Picks a random video from the list
  *
  * 	@returns (string) the videoId
  */
@@ -58,14 +102,18 @@ const pickRandomVideo = () => {
 }
 
 /**
- * 	Loads and plays the video
+ * 	Plays a video
  */
-const playVideo = () => {
+const playVideo = (random = true) => {
+	showPlayerScreen();
+
+	let videoId = random ? pickRandomVideo() : viewedVines[viewedVines.length-1];
+
 	try {
 		let player = new YT.Player('player', {
 			height: window.innerHeight,
 			width: window.innerWidth,
-			videoId: pickRandomVideo(),
+			videoId: videoId,
 			events: {
 				'onReady': onPlayerReady,
 				'onStateChange': onPlayerStateChange,
@@ -75,14 +123,6 @@ const playVideo = () => {
 	} catch (e) {
 		onPlayerError();
 	}
-}
-
-/**
- * removes the content created by the youtube api and resets the div
- */
-const removePlaverDiv = () => {
-	const player = document.getElementById("player");
-	player.outerHTML = "<div id=\"player\"></div>";
 }
 
 /**
@@ -97,7 +137,7 @@ const onPlayerReady = (evt) => {
  */
 const onPlayerStateChange = (evt) => {
 	if (evt.data == YT.PlayerState.ENDED) {
-		viewAVPromp();
+		onVideoEnd();
 	}
 }
 
@@ -108,23 +148,14 @@ const onPlayerStateChange = (evt) => {
  */
 const onPlayerError = (evt) => {
 	if (evt !== undefined) console.log(`The video ${evt.target.getVideoUrl()} can't be loaded\nMaybe it has been deleted by the creator`);
-	removePlaverDiv();
+	hidePlayerScreen();
 	playVideo();
 }
 
-/*
- * 	OTHER LOGIC
- */
-
 /**
- * Shows a selection screen for when the video ends
+ * 	Handler for when the video ends
  */
-const viewAVPromp = () => {
-	// When the video ends, it asks the user if he wants to see another video
-	removePlaverDiv();
-
-	//shows the prompt for playing another video
-	const pAVPrompt = document.getElementById("paVideoPromp");
-	pAVPrompt.classList.remove("hidden");
+const onVideoEnd = () => {
+	hidePlayerScreen()
+	showPlayAnotherVideoPromtScreen();
 }
-

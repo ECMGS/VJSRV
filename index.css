@@ -44,12 +44,26 @@ footer a:hover {
 }
 
 #welcome-screen div h2 {
-	color: #54ad47;
-	font-size: 1.5rem;
+	color: #b5f4ad;
+	font-size: 2rem;
 	font-family: 'Roboto', sans-serif;
 }
 
-#welcome-screen div button{
+#vidInfo {
+	color: #99ef91;
+	font-size: 1.75rem;
+	font-family: 'Roboto', sans-serif;
+	margin: 0.5rem 0 0 2rem;
+}
+
+#button-container {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 1rem;
+	margin: auto;
+}
+
+#button-container button {
 	display: block;
 	margin: auto;
 	margin-top: 10vh;
@@ -59,11 +73,17 @@ footer a:hover {
 	padding: 1rem;
 	font-size: 2rem;
 	font-family: 'Fredoka One', cursive; 
-	background: #c7edca;
-	color: #2d8534;
 	cursor: pointer;
 	transition: 750ms color, 750ms background;
+	background: #c7edca;
+	color: #2d8534;
 }
+
+#button-container button:first-of-type {
+	color: #c7edca;
+	background: #2d8534;
+}
+
 
 #meme-button:hover {
 	color: #c7edca;
