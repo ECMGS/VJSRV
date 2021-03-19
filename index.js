@@ -1,5 +1,6 @@
 // Var containing the url of the vines that the user has already watched
 let viewedVines = [];
+let errorOnVideo;
 
 /**
  * 	BUTTON HANDLERS
@@ -129,6 +130,8 @@ const playVideo = (random = true) => {
  * Starts the player when loaded
  */
 const onPlayerReady = (evt) => {
+	errorOnVideo = setTimeout(onPlayerError, 3000);
+	console.log("setting timeout")
 	evt.target.playVideo();
 }
 
@@ -136,8 +139,14 @@ const onPlayerReady = (evt) => {
  * manages the state of the player
  */
 const onPlayerStateChange = (evt) => {
-	if (evt.data == YT.PlayerState.ENDED) {
-		onVideoEnd();
+	switch (evt.data) {
+		case YT.PlayerState.ENDED:
+			onVideoEnd();
+			break;
+		case YT.PlayerState.PLAYING:
+			clearTimeout(errorOnVideo);
+			console.log("Stopping timeout")
+			break;
 	}
 }
 
@@ -148,6 +157,7 @@ const onPlayerStateChange = (evt) => {
  */
 const onPlayerError = (evt) => {
 	if (evt !== undefined) console.log(`The video ${evt.target.getVideoUrl()} can't be loaded\nMaybe it has been deleted by the creator`);
+	clearTimeout(errorOnVideo)
 	hidePlayerScreen();
 	playVideo();
 }
