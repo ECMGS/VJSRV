@@ -92,12 +92,13 @@ const showPlayAnotherVideoPromtScreen = () => {
  * 	@returns (string) the videoId
  */
 const pickRandomVideo = () => {
-	const video = Math.round(Math.random()*(videos.items.length-1));
+	let video; 
 
 	let ret;
-	while (ret == undefined && !viewedVines.includes(ret)) {
-		 ret = videos.items[video].contentDetails.videoId;
-	}
+	do {
+		video = Math.round(Math.random()*(videos.items.length-1));
+		ret = videos.items[video].contentDetails.videoId;
+	} while (viewedVines.includes(ret));
 	viewedVines = [...viewedVines, ret];
 	return ret;
 }
