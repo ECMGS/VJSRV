@@ -1,6 +1,7 @@
 // Var containing the url of the vines that the user has already watched
 let viewedVines = [];
-let errorOnVideo;
+let erroronvideo;
+let automaticReplay = false;
 
 /**
  * 	BUTTON HANDLERS
@@ -28,6 +29,21 @@ const playAnotherMemeClick = () => {
 const replayMemeClick = () => {
 	hidePlayAnotherVideoPromptScreen();
 	playVideo(false);
+}
+
+/**
+ * 	Handler of the automatic replay button
+ */
+const automaticReplayButtonClick = () => {
+	automaticReplay = automaticReplay ? false : true;
+
+	const automaticReplayStatus = document.getElementById("automatic-replay-status");
+	console.log(automaticReplay);
+	automaticReplayStatus.innerText = automaticReplay ? "on" : "off";
+
+	setComponentVisibility("status-bar",automaticReplay);
+
+	updateWatchedVideosStatusBarElement();
 }
 
 /**
@@ -82,6 +98,12 @@ const showPlayAnotherVideoPromtScreen = () => {
 	totalVideosElement.innerText = videos.items.length;
 }
 
+const updateWatchedVideosStatusBarElement = () => {
+	const watchedVideosStatusBarElement = document.getElementById("watchedVideosStatusBar");
+	watchedVideosStatusBarElement.innerText = viewedVines.length;
+	
+}
+
 /**
  * 	video logic
  */
@@ -124,6 +146,10 @@ const playVideo = (random = true) => {
 		})
 	} catch (e) {
 		onPlayerError();
+	}
+	
+	if (automaticReplay) {
+		updateWatchedVideosStatusBarElement();
 	}
 }
 
@@ -168,5 +194,22 @@ const onPlayerError = (evt) => {
  */
 const onVideoEnd = () => {
 	hidePlayerScreen()
-	showPlayAnotherVideoPromtScreen();
+	if (automaticReplay == false) {
+		showPlayAnotherVideoPromtScreen();
+		return;
+	}
+
+	playVideo(true);
+}
+
+/**
+ * 	CUSTOM FUNCTIONS
+ */
+const setComponentVisibility = (elementId, visible) => {
+	const element = document.getElementById(elementId);
+	if (!visible) {
+		element.classList.add("hidden");	
+		return ;
+	}
+	element.classList.remove("hidden");
 }

@@ -35,7 +35,7 @@
 			<div id="welcome-container">
 				<h1>VJSRV Just Shows Random Vines</h1>
 				<h2>Press on "show me a meme" and see what happes!!</h2>
-				<div id="button-container">
+				<div class="button-container">
 					<button id="meme-button" onclick="playMemeClick()">show me a vine!</button>
 				</div>
 			</div>
@@ -45,15 +45,18 @@
 				<h1>Oh no! the video ended!</h1>
 				<h2>Do you want to see another meme??</h2>
 				<p id="vidInfo">You've wached <span id="watchedVideos"></span> of <span id="totalVideos"></span> videos</p>
-				<div id="button-container">
+				<div class="button-container">
 					<button id="meme-button" onclick="playAnotherMemeClick()">Let's see another one!!</button>
 					<button id="replay-button" onclick="replayMemeClick()">I wanna see it again!!</button>
+				</div>
+				<div class="button-container">
+					<button id="automatic-replay-button" onclick="automaticReplayButtonClick()">Automatic replay: <span id="automatic-replay-status">off</span></button>	
 				</div>
 			</div>
 			
 			<!-- player container -->
-			<div id="player" class="hidden">
-		</div>
+			<div id="player" class="hidden"></div>
+			<div id="status-bar" class="hidden">Automatic reproduction is on, video Nº <span id="watchedVideosStatusBar"></span>, <a href="#" onclick="automaticReplayButtonClick()">turn off</a></div>
 		<footer>
 			Created by @ecmgs - <a href="https://github.com/ECMGS">GitHub</a> - <a href="#">Repo</a>
 		</footer>
